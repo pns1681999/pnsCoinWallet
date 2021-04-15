@@ -1,1 +1,15 @@
 // app global css in SCSS form
+body {
+    /* Disables pull-to-refresh but allows overscroll glow effects. */
+    // overscroll-behavior-y: contain;
+
+    font-family: 'Montserrat', sans-serif;
+}
+html,body {
+    height:100%;
+}
+.page-container {
+    margin: 0 auto;
+    max-width: 1024px;
+    padding: 0 20px;
+}
