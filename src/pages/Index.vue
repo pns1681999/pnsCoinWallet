@@ -52,15 +52,17 @@
       </div>
     </div>
     <about/>
+    <faq/>
   </q-page>
 </template>
 
 <script lang="ts">
 import About from 'components/About.vue'
+import FAQ from 'components/FAQ.vue'
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
-  components: {About}
+  components: {About, FAQ}
 })
 export default class PageIndex extends Vue {
 };
