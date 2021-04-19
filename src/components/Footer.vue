@@ -2,7 +2,7 @@
   <q-footer class="footer">
     <div class="page-container">
       <div class="row">
-        <div class="col-8 row">
+        <div class="col-12 col-md-8 row">
           <div class="col-4 content">
             <div class="content__title">Discover</div>
             <div v-for="item in listDiscover" :key="item" class="content__item">
@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4 content">
+        <div class="col-12 col-md-4 content">
           <div class="content__title">
             Love <q-icon color="red" size="sm" name="favorite"/> MEW? Donate
           </div>
@@ -33,7 +33,7 @@
       </div>
       <div class="note row">
         <div class="col"></div>
-        <div class="col text-center items-center">
+        <div class="col-12 col-md text-center items-center">
           <div class=" text-center">
             Pricing taken from <span class="text-white">Coingecko</span>
           </div>
