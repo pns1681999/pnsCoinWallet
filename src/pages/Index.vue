@@ -151,6 +151,7 @@ export default class PageIndex extends Mixins(DeviceMixin) {
   box-shadow: 0 5px 24px rgb(0 0 0 / 15%);
 }
 .faq{
-  padding: 60px auto;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 </style>

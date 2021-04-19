@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <div id="FAQ" class="page-container">
     <div class="title">FAQs</div>
     <div class="row q-mb-lg">
       <div>

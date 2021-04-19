@@ -13,3 +13,12 @@ html,body {
     max-width: 1024px;
     padding: 0 20px;
 }
+.link, .link:hover, .link:active, .link:visited {
+    color: $primary;
+}
+.link {
+    text-decoration: none;
+}
+.link:hover {
+    text-decoration: underline;
+}

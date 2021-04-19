@@ -4,8 +4,8 @@
       <img src="logo.png" :class="isScroll?'trans toolbar__logo__tiny' : ' trans toolbar__logo'"/>
       <q-space/>
       <div class="btn">
-        <q-btn :disable="!isScroll" :class="isScroll? 'trans btn__show' : 'trans btn__hide'" color="secondary" no-caps label="New Wallet" outline/>
-        <q-btn :disable="!isScroll"  :class="isScroll? 'trans btn__show' : 'trans btn__hide'" color="secondary" unelevated no-caps label="Access" class="q-ml-sm"/>
+        <q-btn :disable="!isScroll" :class="isScroll? 'trans btn__show' : 'trans btn__hide'" color="primary" no-caps label="New Wallet" outline/>
+        <q-btn :disable="!isScroll"  :class="isScroll? 'trans btn__show' : 'trans btn__hide'" color="primary" unelevated no-caps label="Access" class="q-ml-sm"/>
       </div>
     </q-toolbar>
   </q-header>
