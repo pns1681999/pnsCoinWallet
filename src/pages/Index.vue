@@ -52,13 +52,13 @@
       </div>
     </div>
     <about/>
-    <faq/>
+    <f-a-q class="faq"/>
   </q-page>
 </template>
 
 <script lang="ts">
 import About from 'components/About.vue'
-import FAQ from 'components/FAQ.vue'
+import FAQ from 'src/components/FAQ.vue'
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
@@ -149,5 +149,8 @@ export default class PageIndex extends Vue {
   top: -10px;
   -webkit-box-shadow: 0 5px 24px rgb(0 0 0 / 15%);
   box-shadow: 0 5px 24px rgb(0 0 0 / 15%);
+}
+.faq{
+  padding: 60px 0;
 }
 </style>
