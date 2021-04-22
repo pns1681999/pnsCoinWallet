@@ -9,6 +9,23 @@ const routes: RouteConfig[] = [
       {
         path:'/create-wallet',
         component: () => import('pages/CreateWallet.vue')
+      },
+      {
+        path:'/access-wallet',
+        component: () => import('pages/AccessWallet.vue')
+      },
+      {
+        path:'/interface',
+        redirect: '/interface/dashboard'
+      },
+      {
+        path: '/interface/dashboard',
+        name: 'dashboard',
+      },
+      {
+        path: 'interface/send-transaction',
+        name: 'send-transaction',
+        component: () => import('src/pages/SendTransaction.vue')
       }
     ]
   },

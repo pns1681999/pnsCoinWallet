@@ -1,0 +1,77 @@
+<template>
+  <q-dialog persistent :value="show">
+    <q-card class="card">
+      <img src="successBg.png" class="absolute" alt="">
+
+      <q-card-section class="content row justify-center">
+        <div class="done-icon row">
+          <q-icon name="done" color="primary" class="text-weight-bold" size="90px"></q-icon>
+        </div>
+        <div class="col-12 text-center title">
+          Success
+        </div>
+        <div class="col-12  text-center caption">You have created your wallet successfully.</div>
+        <div class="col-12  text-center">
+          <q-btn unelevated no-caps color="primary" @click="$router.push('/access-wallet')" label="Access My Wallet" class="access full-width"/>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+
+const SuccessModalProps = Vue.extend({
+  props: {
+    show: {
+      type: Boolean,
+      default: () => {
+        return false;
+      },
+    }
+  },
+  model: {
+    prop: 'show',
+    event: 'change'
+  }
+})
+
+@Component({
+  
+})
+export default class SuccessModal extends SuccessModalProps  {
+}
+</script>
+<style scoped lang="scss">
+.card {
+  width: 100%;
+  max-width: 530px;
+}
+.content {
+  padding: 40px;
+}
+.done-icon {
+  padding: 25px;
+      border: 3px solid #05c0a5;
+    border-radius: 200px;
+    color: #05c0a5;
+    font-size: 90px;
+    margin-bottom: 15px;
+}
+.access{
+  max-width: 300px;
+  margin-top: 30px;
+  height: 60px;
+}
+.title {
+  color: #003945;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.caption {
+  color: #506175;
+  line-height: 21px;
+}
+</style>

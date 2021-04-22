@@ -1,5 +1,6 @@
 <script>
 import Header from 'components/Header.vue'
+import Drawer from 'components/Drawer.vue'
 import Footer from 'components/Footer.vue'
 export default {
   data() {
@@ -11,13 +12,16 @@ export default {
   computed: {
     isScroll() {
       return this.scrollInfo.position > 100;
+    },
+    isAuth() {
+      return this.$route.path.includes('/interface')
     }
   },
   render() {
     return (
-      <q-layout view="hHh LpR fff">
+      <q-layout view="hHh lpR fff">
         <Header isScroll={this.isScroll}/>
-  
+        {this.isAuth ? <Drawer/> :  ''}
         <q-page-container>
           <router-view />
         </q-page-container>

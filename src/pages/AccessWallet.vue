@@ -3,10 +3,10 @@
     <div  class="page-container">
       <div class="page-title">
         <div class="page-title__content">
-          Get a New Wallet
+          Access My Wallet
         </div>
         <div class="page-title__caption">
-          Already have a wallet? <span> <router-link to='/access-wallet' class="link"> Access My Wallet </router-link> </span>
+          Do not have a wallet? <span> <router-link to='/create-wallet' class="link"> Create A New Wallet </router-link> </span>
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@ import {DeviceMixin} from 'src/mixins'
 @Component({
   components: {FormPassword, DownloadKeystore, SuccessModal}
 })
-export default class CreateWallet extends Mixins(DeviceMixin) {
+export default class AccessWallet extends Mixins(DeviceMixin) {
   password = '';
   show = false;
   get downloadUrl() {
