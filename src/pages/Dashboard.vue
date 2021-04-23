@@ -36,16 +36,36 @@
         </q-card>
       </div>
     </div>
-    <div class="row q-pt-md q-col-gutter-md">
-      <div class="col-8">
+    <div class="q-pt-md">
+      <div>
         <q-card flat>
           <q-card-section class="trans__top-section">
             <div class="trans__title">
-              Send Transaction
+              Transaction History
             </div>
           </q-card-section>
           <q-card-section class="trans__form-container">
-            <form-transaction/>
+            <q-table
+              :data="data"
+              :columns="columns"
+              row-key="txnHash"
+              title-class="text-h1"
+            >
+              <template v-slot:body-cell-txnHash="props">
+                <q-td :props="props">
+                  <div class="ellipsis" style="max-width: 300px">
+                    {{props.value}}
+                  </div>
+                </q-td>
+              </template>
+              <template v-slot:body-cell-method="props">
+                <q-td :props="props">
+                  <div>
+                    <q-badge color="purple" :label="props.value" />
+                  </div>
+                </q-td>
+              </template>
+            </q-table>
           </q-card-section>
         </q-card>
       </div>
@@ -60,7 +80,79 @@ import FormTransaction from 'components/FormTransaction.vue'
 @Component({
   components: {FormTransaction}
 })
-export default class SendTransaction extends Mixins(DeviceMixin) {
+export default class Dashboard extends Mixins(DeviceMixin) {
+  data=[
+    {
+      txnHash: '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5',
+      method: 'Transfer',
+      block: '123232',
+      dateTime: '2021-04-23 1:42:12',
+      from: '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5',
+      to: '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5',
+      value: 12,
+      txnFee: 0.32,
+    }
+  ]
+  columns = [
+    {
+      name: 'txnHash',
+      required: true,
+      label: 'Txn Hash',
+      align: 'left',
+      field: 'txnHash',
+    },
+    {
+      name: 'method',
+      required: true,
+      label: 'Method',
+      align: 'left',
+      field: 'method',
+    },
+    {
+      name: 'block',
+      required: true,
+      label: 'Block',
+      align: 'left',
+      field: 'block',
+    },
+    {
+      name: 'dateTime',
+      required: true,
+      label: 'Date Time (UTC)',
+      align: 'left',
+      field: 'dateTime',
+    },
+    {
+      name: 'from',
+      required: true,
+      label: 'From',
+      align: 'left',
+      field: 'from',
+    },
+    {
+      name: 'to',
+      required: true,
+      label: 'To',
+      align: 'left',
+      field: 'to',
+    },
+    {
+      name: 'value',
+      required: true,
+      label: 'Value',
+      align: 'left',
+      field: 'value',
+      format: (val: number) => `${val} PNS`
+    },
+    {
+      name: 'txnFee',
+      required: true,
+      label: 'Txn Fee',
+      align: 'left',
+      field: 'txnFee',
+      format: (val: number) => `${val} PNS`
+    }
+  ]
   get walletAdress() {
     return '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5';
   }

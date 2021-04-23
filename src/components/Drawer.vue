@@ -12,7 +12,7 @@
             <img v-else :src="item.icon" alt="">
           </q-item-section>
           <q-item-section>
-              <q-item-label>{{item.label}}</q-item-label>
+            <q-item-label>{{item.label}}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>

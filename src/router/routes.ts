@@ -21,6 +21,7 @@ const routes: RouteConfig[] = [
       {
         path: '/interface/dashboard',
         name: 'dashboard',
+        component: () => import('src/pages/Dashboard.vue')
       },
       {
         path: 'interface/send-transaction',

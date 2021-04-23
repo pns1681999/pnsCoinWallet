@@ -1,32 +1,33 @@
 <template>
   <q-form
     @submit="onSubmit"
+    @reset="onReset"
   >
-    <div class="label">
-      Your Password
+    <div class="row q-col-gutter-sm">
+      <div class="col-5">
+        <div class="input__label">
+          Type
+        </div>
+        <q-input filled value="PNS Coin" disable/>
+      </div>
+      <div class="col-7">
+        <div class="input__label">
+          Amount
+        </div>
+        <q-input filled type="number"  v-model="amount"/>
+      </div>
     </div>
-    <div>
-        <q-input
-          filled
-          v-model="pass"
-          :type="isPwd ? 'password' : 'text'"
-          placeholder="Please Enter At Least 9 Character"
-          lazy-rules
-          :rules="[ val => val && val.length > 9 || 'The password field must be at least 9 characters']"
-        >
-          <template v-slot:append>
-            <q-icon
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
-          </template>
-        </q-input>
+    <div class="q-mt-xl">
+      <div class="input__label">
+        To Address
+      </div>
+      <q-input filled clearable v-model="toAddress" />
     </div>
     <div class="text-center">
-      <q-btn unelevated no-caps type="submit" color="primary" label="Next" class="next full-width">
-        <q-icon name="east" class="next__icon"/>
-      </q-btn>
+      <q-btn unelevated no-caps type="submit" color="primary" label="Send Transaction" class="btn full-width"/>
+    </div>
+    <div class="text-center">
+      <q-btn class="text-center q-mt-md" color="primary" flat no-caps type="reset">Clear all</q-btn>
     </div>
   </q-form>
 </template>
@@ -35,43 +36,33 @@
 import { Component, Mixins } from 'vue-property-decorator';
 import {DeviceMixin} from 'src/mixins'
 
-@Component({
-  props: {
-    password: {
-      type: String,
-      default: null,
-    }
-  },
-  model: {
-    prop: 'password',
-    event: 'submit'
-  }
-})
-export default class FromTransaction extends Mixins(DeviceMixin) {
-  pass = '';
-  isPwd = true;
+@Component({})
+export default class FormTransaction extends Mixins(DeviceMixin) {
+  amount = null;
+  toAddress = '';
   isSubmited = false;
   onSubmit() {
     console.log(this)
-    this.$emit('submit', this.pass)
+    this.$emit('submit', this.amount)
+  }
+  onReset() {
+    this.amount = null;
+    this.toAddress = '';
   }
 }
 </script>
 <style scoped lang="scss">
-.label{
-  margin-bottom: 40px;
-  display: block;
-  font-size: 20px;
-  font-weight: 500;
-  text-align: center;
-}
- .next{
+ .btn{
   max-width: 300px;
   margin-top: 30px;
   height: 60px;
-  &__icon{
-    position: absolute;
-    right: 10px;
+}
+.input{
+  &__label{
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 23px;
+    margin-bottom: 15px;
   }
 }
 </style>
