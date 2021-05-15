@@ -5,17 +5,20 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
+      { path: '', name: 'home', component: () => import('pages/Index.vue') },
       {
         path:'/create-wallet',
+        name: 'create',
         component: () => import('pages/CreateWallet.vue')
       },
       {
         path:'/access-wallet',
+        name: 'access',
         component: () => import('pages/AccessWallet.vue')
       },
       {
         path:'/interface',
+        name: 'interface',
         redirect: '/interface/dashboard'
       },
       {
@@ -35,6 +38,7 @@ const routes: RouteConfig[] = [
   // but you can also remove it
   {
     path: '*',
+    name: 'error',
     component: () => import('pages/Error404.vue')
   }
 ];

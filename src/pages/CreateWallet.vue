@@ -38,6 +38,7 @@ import SuccessModal from 'components/SuccessModal.vue'
 
 import { Component, Mixins } from 'vue-property-decorator';
 import {DeviceMixin} from 'src/mixins'
+import {ec, cryptoHash} from 'src/utils/index'
 @Component({
   components: {FormPassword, DownloadKeystore, SuccessModal}
 })
@@ -46,9 +47,13 @@ export default class CreateWallet extends Mixins(DeviceMixin) {
   show = false;
   get downloadUrl() {
     const data = {
-      password: this.password
+      password: this.password,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      keyPair: ec.genKeyPair()
     }
-    const blob = new Blob([JSON.stringify(data)], {type: 'octet/stream'})
+    
+
+    const blob = new Blob([JSON.stringify(data)], {type: 'application/json'})
     return window.URL.createObjectURL(blob);
   }
 };

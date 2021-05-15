@@ -45,7 +45,7 @@
             </div>
           </q-card-section>
           <q-card-section class="trans__form-container">
-            <form-transaction/>
+            <form-transaction @submit="handleSubmit"/>
           </q-card-section>
         </q-card>
       </div>
@@ -61,11 +61,30 @@ import FormTransaction from 'components/FormTransaction.vue'
   components: {FormTransaction}
 })
 export default class SendTransaction extends Mixins(DeviceMixin) {
+  walletBalance = 0;
   get walletAdress() {
-    return '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5';
+    return this.$q.localStorage.getItem('address')
   }
-  get walletBalance() {
-    return 126;
+  async loadWallet () {
+    const res = await this.$api.wallet.getInfo(this.walletAdress)
+    this.walletBalance = res.data.balance;
+    console.log(res)
+  }
+  async created() {
+    await this.loadWallet()
+  }
+  async handleSubmit(data) {
+    const body = {
+      ...data,
+      keyPair: this.$q.localStorage.getItem('keyPair')
+    }
+    try {
+      const res = await this.$api.wallet.sendCrypto(data.recipient, parseInt(data.amount));
+      res.status = 200 ? this.$q.notify({type: 'positive', message: 'Transaction created!'})
+      : this.$q.notify({type:'negative', message:'Something went wrong. Please try again'})
+    } catch (error) {
+      this.$q.notify({type:'negative', message:'Something went wrong. Please try again'})
+    }
   }
 };
 </script>

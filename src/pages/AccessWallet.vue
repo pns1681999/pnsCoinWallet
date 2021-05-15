@@ -16,13 +16,11 @@
       </q-card-section>
       <q-linear-progress v-if="password.length" size="md" :value="0.6"/>
       <q-card-section class="card__password">
-        <form-password v-if="!password.length" v-model="password"/>
-        <download-keystore v-else :downloadUrl = "downloadUrl" @downloaded="show = true"/>
-        <success-modal v-model="show"/>
+        <upload-keystore v-if="password.length" @load="keystore = $event" @access="onAccess"/>
+        <form-password v-else v-model="password"/>
+        <fail-modal :show="show" @hide="onHide"/>
       </q-card-section>
       <q-card-section class="card__note">
-        <div class="text-center"> <span class="text-red text-weight-medium">DO NOT FORGET</span> to save your password. You will need this</div>
-        <div class="text-center"> <span class="text-red text-weight-medium">Password + Keystore</span> File to unlock your wallet.</div>
       </q-card-section>
     </q-card>
     <div class="page-note">
@@ -34,22 +32,38 @@
 <script lang="ts">
 import FormPassword from 'components/FormPassword.vue'
 import DownloadKeystore from 'components/DownloadKeystore.vue'
-import SuccessModal from 'components/SuccessModal.vue'
-
+import UploadKeystore from 'components/UploadKeystore.vue'
+import FailModal from 'components/FailModal.vue'
 import { Component, Mixins } from 'vue-property-decorator';
 import {DeviceMixin} from 'src/mixins'
+import {ec} from 'src/utils/index'
+
+
 @Component({
-  components: {FormPassword, DownloadKeystore, SuccessModal}
+  components: {FormPassword, DownloadKeystore, FailModal, UploadKeystore},
 })
 export default class AccessWallet extends Mixins(DeviceMixin) {
   password = '';
+  file = null;
+  keystore = null;
   show = false;
-  get downloadUrl() {
-    const data = {
-      password: this.password
+  onAccess() {
+    if (this.keystore) {
+      const keyJSON = JSON.parse(this.keystore);
+      if(keyJSON.password === this.password) {
+        const keyPair = ec.keyPair(keyJSON.keyPair);
+        this.$q.localStorage.set('address', keyPair.getPublic().encode('hex'));
+        this.$q.localStorage.set('keyPair', keyJSON.keyPair);
+        this.$router.push('/interface');
+      } else {
+        this.show = true;
+      }
     }
-    const blob = new Blob([JSON.stringify(data)], {type: 'octet/stream'})
-    return window.URL.createObjectURL(blob);
+  }
+  onHide() {
+    this.show = false;
+    this.file = null;
+    this.password = '';
   }
 };
 </script>

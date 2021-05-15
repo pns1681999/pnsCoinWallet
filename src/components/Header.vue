@@ -1,25 +1,62 @@
 <template>
   <q-header :elevated="isScroll" class="bg-white text-white header">
-    <q-toolbar  :class="isScroll ? 'trans page-container toolbar__tiny justify-center' : 'trans page-container toolbar justify-center'">
-      <img src="logo.png" :class="isScroll?'trans toolbar__logo__tiny' : ' trans toolbar__logo'"/>
-      <q-space/>
-      <div class="btn">
-        <q-btn :disable="!isScroll" :class="isScroll? 'trans btn__show' : 'trans btn__hide'" color="primary" no-caps label="New Wallet" outline/>
-        <q-btn :disable="!isScroll"  :class="isScroll? 'trans btn__show' : 'trans btn__hide'" color="primary" unelevated no-caps label="Access" class="q-ml-sm"/>
-      </div>
-    </q-toolbar>
+    <div :class="!isAuth ? 'page-container' : ''">
+      <q-toolbar  :class="isScroll ? 'trans toolbar__tiny justify-center' : 'trans toolbar justify-center'">
+        <img src="logo.png" :class="isScroll?'trans toolbar__logo__tiny' : ' trans toolbar__logo'" @click="$router.push('/')">
+        <q-space/>
+        <div v-if="!isAuth" class="btn">
+          <q-btn :disable="!isScroll" :class="isScroll? 'trans btn__show' : 'trans btn__hide'" to='/create-wallet' color="primary" no-caps label="New Wallet" outline/>
+          <q-btn :disable="!isScroll"  :class="isScroll? 'trans btn__show' : 'trans btn__hide'" to='/access-wallet' color="primary" unelevated no-caps label="Access" class="q-ml-sm"/>
+        </div>
+        <div v-else>
+          <q-avatar>
+            <img :src="avatarSrc" alt="">
+          </q-avatar>
+          <q-btn icon="expand_more" flat color="grey-8" rounded>
+            <q-menu auto-close>
+              <q-list>
+                <q-item clickable>
+                  <q-item-section>
+                    Transaction Pool
+                  </q-item-section>
+                </q-item>
+                <q-item clickable @click="logOut">
+                  <q-item-section>
+                    Log out
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
+      </q-toolbar>
+    </div>
   </q-header>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-
+import * as blockies from 'blockies-ts'
 @Component({
   props: {
     isScroll: Boolean
   }
 })
 export default class Header extends Vue {
+  get isAuth() {
+    return this.$route.path.includes('/interface')
+  }
+  get walletAdress() {
+    return '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5';
+  }
+  get avatarSrc() {
+    return blockies.create({seed: this.walletAdress}).toDataURL()
+  }
+
+  logOut() {
+    this.$q.localStorage.clear();
+    this.$router.push('/');
+  }
 }
 </script>
 <style scoped lang="scss">

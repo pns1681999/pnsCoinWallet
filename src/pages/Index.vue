@@ -10,7 +10,7 @@
         <img v-if="isDesktop" src="homepage-1.png" class="col-7">
       </div>
       <div :class="$q.screen.gt.sm?'grid-2-col' : ''">
-        <div :class="isDesktop ? 'card card__create' : 'card card__create justify-center'">
+        <div @click="$router.push('/create-wallet')" :class="isDesktop ? 'card card__create' : 'card card__create justify-center'">
           <div v-if="isDesktop" class="card__left">
             <img class="card__img" src="create.png">
           </div>
@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <div :class="isDesktop ? 'card card__access' : 'card card__access justify-center'">
+        <div @click="$router.push('/access-wallet')" :class="isDesktop ? 'card card__access' : 'card card__access justify-center'">
           <div v-if="isDesktop" class="card__left">
             <img class="card__img" src="access.png">
           </div>

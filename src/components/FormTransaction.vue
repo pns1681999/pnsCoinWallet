@@ -42,8 +42,12 @@ export default class FormTransaction extends Mixins(DeviceMixin) {
   toAddress = '';
   isSubmited = false;
   onSubmit() {
-    console.log(this)
-    this.$emit('submit', this.amount)
+    const transact = {
+      recipient: this.toAddress,
+      amount: this.amount
+    }
+    this.$emit('submit', transact)
+    this.onReset()
   }
   onReset() {
     this.amount = null;

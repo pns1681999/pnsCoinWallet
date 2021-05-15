@@ -25,7 +25,6 @@ export default {
         <q-page-container>
           <router-view />
         </q-page-container>
-  
         <Footer/>
         <q-scroll-observer vOn:scroll={(info) => this.scrollInfo = info}/>
       </q-layout>
@@ -34,5 +33,4 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-
 </style>

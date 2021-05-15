@@ -14,12 +14,12 @@
       </div>
       <div class="col-4">
         <q-card flat class="row card card-balance">
-          <q-card-section>
+          <q-card-section>  
             <img src="balance.svg" alt="" class="card__icon">
           </q-card-section>
           <q-card-section class="col">
             <div class="card__title">Balance</div>
-            <p class="card__content">{{walletBalance}} ETH</p>
+            <p class="card__content">{{walletBalance}} PNS</p>
           </q-card-section>
         </q-card>
       </div>
@@ -48,10 +48,10 @@
             <q-table
               :data="data"
               :columns="columns"
-              row-key="txnHash"
+              :row-key="(Math.floor(Math.random() * 99999)).toString()"
               title-class="text-h1"
             >
-              <template v-slot:body-cell-txnHash="props">
+              <template v-slot:body-cell-id="props">
                 <q-td :props="props">
                   <div class="ellipsis" style="max-width: 300px">
                     {{props.value}}
@@ -61,7 +61,18 @@
               <template v-slot:body-cell-method="props">
                 <q-td :props="props">
                   <div>
-                    <q-badge color="purple" :label="props.value" />
+                    <q-badge v-if="props.row.from === '*authorized-reward*'" color="yellow" label="Reward" />
+                    <q-badge v-else color="purple" label="Transfer" />
+                  </div>
+                </q-td>
+              </template>
+              <template v-slot:body-cell-type="props">
+                <q-td :props="props">
+                  <div v-if="walletAdress === props.row.from">
+                    <q-badge color="red" label="Out" />
+                  </div>
+                  <div v-if="walletAdress === props.row.to">
+                    <q-badge color="green" label="In" />
                   </div>
                 </q-td>
               </template>
@@ -77,36 +88,23 @@
 import { Component, Mixins } from 'vue-property-decorator';
 import {DeviceMixin} from 'src/mixins';
 import FormTransaction from 'components/FormTransaction.vue'
+
 @Component({
   components: {FormTransaction}
 })
 export default class Dashboard extends Mixins(DeviceMixin) {
-  data=[
-    {
-      txnHash: '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5',
-      method: 'Transfer',
-      block: '123232',
-      dateTime: '2021-04-23 1:42:12',
-      from: '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5',
-      to: '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5',
-      value: 12,
-      txnFee: 0.32,
-    }
-  ]
+  data=[]
   columns = [
     {
-      name: 'txnHash',
+      name: 'id',
       required: true,
-      label: 'Txn Hash',
+      label: 'Txn Id',
       align: 'left',
-      field: 'txnHash',
+      field: 'id',
     },
     {
       name: 'method',
-      required: true,
-      label: 'Method',
-      align: 'left',
-      field: 'method',
+      label: 'Method'
     },
     {
       name: 'block',
@@ -116,11 +114,11 @@ export default class Dashboard extends Mixins(DeviceMixin) {
       field: 'block',
     },
     {
-      name: 'dateTime',
+      name: 'timestamp',
       required: true,
       label: 'Date Time (UTC)',
       align: 'left',
-      field: 'dateTime',
+      field: 'timestamp',
     },
     {
       name: 'from',
@@ -130,6 +128,9 @@ export default class Dashboard extends Mixins(DeviceMixin) {
       field: 'from',
     },
     {
+      name: 'type'
+    },
+    {
       name: 'to',
       required: true,
       label: 'To',
@@ -137,27 +138,26 @@ export default class Dashboard extends Mixins(DeviceMixin) {
       field: 'to',
     },
     {
-      name: 'value',
+      name: 'amount',
       required: true,
-      label: 'Value',
+      label: 'Amount',
       align: 'left',
-      field: 'value',
-      format: (val: number) => `${val} PNS`
-    },
-    {
-      name: 'txnFee',
-      required: true,
-      label: 'Txn Fee',
-      align: 'left',
-      field: 'txnFee',
+      field: 'amount',
       format: (val: number) => `${val} PNS`
     }
   ]
+  walletBalance = 0;
   get walletAdress() {
-    return '0xCd4655Fd05bcf8E086FB9eaC5bB975ff95eFc2E5';
+    return this.$q.localStorage.getItem('address')
   }
-  get walletBalance() {
-    return 126;
+  async loadWallet () {
+    const res = await this.$api.wallet.getInfo(this.walletAdress)
+    const res2 = await this.$api.wallet.transactionHistory(this.walletAdress)
+    this.walletBalance = res.data.balance;
+    this.data = res2.data
+  }
+  async created() {
+    await this.loadWallet()
   }
 };
 </script>

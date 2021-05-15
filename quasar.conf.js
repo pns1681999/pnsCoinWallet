@@ -27,6 +27,7 @@ module.exports = configure(function (/* ctx */) {
     boot: [
       
       'axios',
+      'permission'
     ],
 
     // https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -101,7 +102,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['LocalStorage', 'Notify']
     },
 
     animations: 'all', // --- includes all animations

@@ -56,7 +56,7 @@ export default class DownloadKeystore extends DownloadProps  {
   ]
   handleDownload() {
     const aTag = this.$refs['aTag'] as HTMLAnchorElement
-    aTag.download = Date.now().toString() + '.txt'
+    aTag.download = Date.now().toString() + '.pnsCoin'
     aTag.click()
     this.$emit('downloaded')
     // window.URL.revokeObjectURL(this.downloadUrl)
