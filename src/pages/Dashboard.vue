@@ -61,7 +61,7 @@
               <template v-slot:body-cell-method="props">
                 <q-td :props="props">
                   <div>
-                    <q-badge v-if="props.row.from === '*authorized-reward*'" color="yellow" label="Reward" />
+                    <q-badge v-if="props.row.from === '<<PNS Coin System>>'" color="yellow" label="Reward" />
                     <q-badge v-else color="purple" label="Transfer" />
                   </div>
                 </q-td>
